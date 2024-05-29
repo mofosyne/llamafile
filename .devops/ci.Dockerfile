@@ -1,4 +1,3 @@
-
 ###############################################################################
 FROM alpine as build
 
@@ -8,7 +7,9 @@ RUN apk update && \
 WORKDIR /build
 COPY . .
 
-RUN make
+RUN make cosmocc
+
+RUN make -j $(nproc)
 
 ###############################################################################
 FROM alpine as package
@@ -45,3 +46,5 @@ CMD ["--cli", "-p", "hello world the gruff man said"]
 # docker build -f .devops/ci.Dockerfile -t llamafile_ci .
 # docker create --name llamafile_ci_container llamafile_ci
 # docker cp llamafile_ci_container:/usr/src/app/llamafile test.llamafile
+
+

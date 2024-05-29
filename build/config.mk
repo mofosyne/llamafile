@@ -5,11 +5,16 @@ PREFIX = /usr/local
 COSMOCC = .cosmocc/3.3.8
 TOOLCHAIN = $(COSMOCC)/bin/cosmo
 
+ARCH := $(shell uname -m)
+
+# Use APE loader to improve portability in container enviroments
+APE_LOADER := $(COSMOCC)/bin/ape-$(ARCH).elf
+
 AR = $(TOOLCHAIN)ar
 CC = $(TOOLCHAIN)cc
 CXX = $(TOOLCHAIN)c++
-ZIPOBJ = $(COSMOCC)/bin/zipobj
-MKDEPS = $(COSMOCC)/bin/mkdeps
+ZIPOBJ = $(APE_LOADER) $(COSMOCC)/bin/zipobj
+MKDEPS = $(APE_LOADER) $(COSMOCC)/bin/mkdeps
 INSTALL = install
 
 ARFLAGS = rcsD
